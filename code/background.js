@@ -10,4 +10,5 @@ function Background(ctx, canvas) {
 
 Background.prototype.draw = function() {
   this.ctx.drawImage(this.stageImage, this.posX, this.posY, this.canvas.width, this.canvas.height);
+  
 };

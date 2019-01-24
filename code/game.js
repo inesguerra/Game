@@ -5,7 +5,17 @@ function Game() {
   this.player = undefined;
   this.background = undefined;
   this.framesCounter = 0;
-  this.score = 0;
+  this.score = undefined;
+  this.scoreLife = undefined;
+  this.intervalId = undefined;
+  this.points = 30;
+  this.life = 3;
+  this.enemy = undefined;
+  this.startState = 0;
+  this.keySpace = true;
+  this.presentation = undefined;
+  this.gameOverCover = new GameOverCover (this)
+  this.hearts = undefined;
 }
 
 
@@ -43,23 +53,6 @@ Game.prototype.comprobationObstacle = function(temporalObstacle,z){
     if(temporalObstacle.posX  > obstacle.posX + obstacle.width && temporalObstacle.posX + temporalObstacle.width < obstacle.posX) {
       return false
       
-    }else{
-
-      // if(z===1){
-      //   temporalObstacle.posX = Math.floor(Math.random()*(400 - 50) + 50);
-      //   this.comprobationObstacle(temporalObstacle,1)
-      // }
-      // if(z===2){
-      //   temporalObstacle.posX = Math.floor(Math.random()*(800 - 400)+ 400);
-      //   this.comprobationObstacle(temporalObstacle,2)
-      // }
-      // if(z===3){
-      //   temporalObstacle.posX = Math.floor(Math.random()*(1100 - 800) + 800);
-      //   this.comprobationObstacle(temporalObstacle,3)}
-      // if(z===4){
-      //   temporalObstacle.posX = Math.floor(Math.random()*1100);
-      //   this.comprobationObstacle(temporalObstacle,4)
-      // }
     }
       
   }.bind(this)) 
@@ -146,22 +139,48 @@ if(((this.player.posX + this.player.width) >= obstacle.posX &&
   ){
 
     if (obstacle.type === "champu") {
-      this.score += 10;
+      this.score.points += 10;
     }
     if (obstacle.type === "tijera") {
-      this.score -= 10;
+      this.score.points -= 10;
     }
     if (obstacle.type === "mascarilla") {
-      this.life += 1;
+      this.scoreLife.points += 1;
     }
 
      this.arrObstacles.splice(i,1)
-     console.log("ha tocado!")
-    // return obstacle.collised() == true
   }}.bind(this))
  
 }
- 
+
+Game.prototype.collisionEnemy = function() {
+
+  var hit = false
+
+  if((this.player.posX + (this.player.width/2)) == (this.enemy.posX + (this.enemy.width/2)) &&
+      this.player.posY + this.player.height >= this.enemy.posY &&
+      this.player.posY < (this.enemy.posY + this.enemy.height) 
+    ){
+        hit = true
+      }
+
+      if (hit === true) {
+        this.scoreLife.points -= 1;
+      }
+
+
+    }
+
+    //HEARTS
+
+    Game.prototype.initializeHearts = function() {
+      this.hearts = new Hearts(this.ctx, this.canvas);
+    };
+  
+    Game.prototype.drawHearts = function() {
+      this.hearts.draw();
+    }
+  
 //BACKGROUND
 Game.prototype.initializeBackground = function() {
     this.background = new Background(this.ctx, this.canvas);
@@ -171,27 +190,41 @@ Game.prototype.drawBackground = function() {
     this.background.draw();
 };
 
-// SCORE
-Game.prototype.drawScore = function () {
-  this.score.update(this.points, this.ctx)
+//COVER
+  Game.prototype.initializePresentation = function(){
+    this.presentation = new Presentacion (this.ctx, this.canvas);
+  }
+Game.prototype.drawPresentation = function() {
+  this.presentation.draw();
 }
 
-Game.prototype.initial
+
+// SCORE
+Game.prototype.drawScore = function() {
+  this.score.draw()
+  this.scoreLife.draw()
+}
+
+Game.prototype.initializeScore = function() {
+  this.score = new Score (this.points, this.ctx, 50, 50)
+  this.scoreLife = new Score (this.life, this.ctx, 50, 100)
+}
 
 //DRAW; REPEAT; START
 Game.prototype.drawAll = function() {
-  this.drawScore();
   this.drawBackground();
+  this.drawHearts();
   this.drawEnemy();
   this.drawObstacle();
   this.drawPlayer();
+  this.drawScore();
   this.clearObstacles();
 };
 
 Game.prototype.repeat = function() {
-  IntervalId = setInterval(
+  this.intervalId = setInterval(
     function() {
-      this.ctx.clearRect(0, 0, 1200, 700);
+      this.clearScreen();
 
       this.framesCounter++;
 
@@ -210,11 +243,16 @@ Game.prototype.repeat = function() {
       if (this.framesCounter % 1000 === 0){
         this.createObstacle3();
       }
-
-    
+      
+      
+      
       this.drawAll();
       this.enemy.move();
       this.collision();
+      this.collisionEnemy();
+      if (this.points === 0 || this.scoreLife.points === 0){
+        this.gameOver();
+      }
     }.bind(this),
     1000 / 60
   );
@@ -223,10 +261,45 @@ Game.prototype.repeat = function() {
 Game.prototype.start = function() {
   this.initializeEnemy();
   this.initializePlayer();
+  this.initializeHearts();
+  this.initializeScore();
   this.initializeBackground();
   this.createObstacle();
   this.repeat();
+  this.shootSound = new MySound("../music/David Bisbal - Ave María (Official Music Video).mp3");  
+  this.shootSound.play();
+
 };
 
+Game.prototype.gameOver = function() {
+  
+  this.stop();
+  this.clearScreen();
+  this.drawGameOverCover();
+}
 
-// colision: https://www.youtube.com/watch?v=eqfLnF5UvyA&list=PLN9W6BC54TJLlH57qvG2aN9F99xaAk6Df&index=34
+Game.prototype.stop = function() {
+  clearInterval(this.intervalId)
+
+}
+Game.prototype.clearScreen = function(){
+  this.ctx.clearRect(0, 0, 1200, 700);
+}
+Game.prototype.drawGameOverCover = function(){
+  this.gameOverCover.draw()
+}
+
+Game.prototype.startGame = function(){
+  
+  this.initializePresentation()
+  this.ctx.clearRect(0, 0, 1200, 700)
+  this.drawPresentation()
+  window.onkeydown = function(e) {
+    
+    if (e.keyCode === 32 && this.keySpace){
+      this.start();
+      this.startState = 1;
+      this.keySpace = false;
+    }
+  }.bind(this)
+}

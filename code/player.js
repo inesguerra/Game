@@ -1,12 +1,12 @@
 function Player(ctx, canvas) {
   this.canvas = canvas;
-  this.posX = 550;
+  this.posX = 600;
   this.posY = 0;
   this.width = 100;
   this.height = 170;
   this.life = 3;
   this.posY0= this.canvas.height*0.7;
-  this.v = 40;
+  this.v = 9;
   this.bisbalImage = new Image();
   this.bisbalImage.src = "../images/bisbal11-pelino.png";
   this.ctx = ctx;
