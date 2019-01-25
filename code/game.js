@@ -290,7 +290,7 @@ Game.prototype.start = function() {
   this.initializeBackground();
   this.createObstacle();
   this.repeat();
-  this.shootSound = new MySound("./music/David Bisbal - Ave María (Official Music Video).mp3");  
+  this.shootSound = new MySound("music/David Bisbal - Ave María (Official Music Video).mp3");  
   this.shootSound.play();
 
 };
