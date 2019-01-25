@@ -1,8 +1,12 @@
 canvas {
-    border: 2px solid green
+  border: 2px solid green;
+}
+
+h1 {
+  font-family: CocoGothic;
 }
 
 @font-face {
-    font-family: "CocoGothic";
-    src: url('../font/CocoGothic_trial.ttf');
-    }
+  font-family: "CocoGothic";
+  src: url("../font/CocoGothic_trial.ttf");
+}

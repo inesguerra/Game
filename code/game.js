@@ -15,7 +15,7 @@ function Game() {
   this.keySpace = true;
   this.presentation = undefined;
   this.gameOverCover = new GameOverCover (this)
-  this.hearts = undefined;
+  this.hearts = [];
 }
 
 
@@ -145,8 +145,21 @@ if(((this.player.posX + this.player.width) >= obstacle.posX &&
       this.score.points -= 10;
     }
     if (obstacle.type === "mascarilla") {
-      this.scoreLife.points += 1;
-    }
+      console.log(this.hearts.length)
+      if (this.scoreLife.points < 3) {
+        switch (this.hearts.length) {
+          case 1:
+          this.hearts.push(new Heart(this.ctx, 80))
+          this.scoreLife.points += 1;
+          break;
+          case 2:
+          this.hearts.push(new Heart(this.ctx, 140))
+          this.scoreLife.points += 1;
+          break;
+        }
+        
+      }
+    } 
 
      this.arrObstacles.splice(i,1)
   }}.bind(this))
@@ -166,6 +179,7 @@ Game.prototype.collisionEnemy = function() {
 
       if (hit === true) {
         this.scoreLife.points -= 1;
+        this.hearts.splice(-1,1)
       }
 
 
@@ -173,17 +187,21 @@ Game.prototype.collisionEnemy = function() {
 
     //HEARTS
 
-    Game.prototype.initializeHearts = function() {
-      this.hearts = new Hearts(this.ctx, this.canvas);
-    };
+    // Game.prototype.initializeHearts = function() {
+    //   this.hearts = new Hearts(this.ctx, this.canvas);
+    // };
   
-    Game.prototype.drawHearts = function() {
-      this.hearts.draw();
-    }
+    // Game.prototype.drawHearts = function() {
+    //   this.hearts.draw();
+    // }
   
 //BACKGROUND
 Game.prototype.initializeBackground = function() {
     this.background = new Background(this.ctx, this.canvas);
+  };
+
+  Game.prototype.initializeLife = function() {
+    this.hearts.push(new Heart(this.ctx, 20), new Heart(this.ctx, 80), new Heart(this.ctx, 140))
   };
 
 Game.prototype.drawBackground = function() {
@@ -201,8 +219,8 @@ Game.prototype.drawPresentation = function() {
 
 // SCORE
 Game.prototype.drawScore = function() {
-  this.score.draw()
-  this.scoreLife.draw()
+
+  // this.scoreLife.draw()
 }
 
 Game.prototype.initializeScore = function() {
@@ -212,12 +230,17 @@ Game.prototype.initializeScore = function() {
 
 //DRAW; REPEAT; START
 Game.prototype.drawAll = function() {
+ 
   this.drawBackground();
-  this.drawHearts();
+  // this.drawHearts();
   this.drawEnemy();
   this.drawObstacle();
   this.drawPlayer();
-  this.drawScore();
+  this.score.draw()
+  // this.drawScore();
+  this.hearts.forEach(function(heart){
+    heart.draw()
+  })
   this.clearObstacles();
 };
 
@@ -259,9 +282,10 @@ Game.prototype.repeat = function() {
 };
 
 Game.prototype.start = function() {
+  this.initializeLife();
   this.initializeEnemy();
   this.initializePlayer();
-  this.initializeHearts();
+  // this.initializeHearts();
   this.initializeScore();
   this.initializeBackground();
   this.createObstacle();

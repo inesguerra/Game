@@ -6,7 +6,7 @@ function Player(ctx, canvas) {
   this.height = 170;
   this.life = 3;
   this.posY0= this.canvas.height*0.7;
-  this.v = 9;
+  this.v = 60;
   this.bisbalImage = new Image();
   this.bisbalImage.src = "../images/bisbal11-pelino.png";
   this.ctx = ctx;
