@@ -1,7 +1,7 @@
 function GameOverCover(game){
     this.game = game;
     this.img = new Image()
-    this.img.src = '../images/1195945214_0.jpg'
+    this.img.src = './images/1195945214_0.jpg'
 
 }
 

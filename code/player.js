@@ -8,7 +8,7 @@ function Player(ctx, canvas) {
   this.posY0= this.canvas.height*0.7;
   this.v = 60;
   this.bisbalImage = new Image();
-  this.bisbalImage.src = "../images/bisbal11-pelino.png";
+  this.bisbalImage.src = "./images/bisbal11-pelino.png";
   this.ctx = ctx;
   this.posY = this.posY0;
   this.vy = 1;

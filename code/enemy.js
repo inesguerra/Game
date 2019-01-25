@@ -6,7 +6,7 @@ function Enemy (ctx, canvas){
     this.width = 50;
     this.height = 70;
     this.hairdresserImage = new Image ();
-    this.hairdresserImage.src = '../images/Lluis-Llongueras.png';
+    this.hairdresserImage.src = './images/Lluis-Llongueras.png';
     this.v = 3;
 }
 

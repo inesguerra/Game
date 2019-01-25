@@ -1,6 +1,6 @@
 function Heart (ctx, distance){
     this.heartImage = new Image();
-    this.heartImage.src = '../images/corazon.png';
+    this.heartImage.src = './images/corazon.png';
     this.ctx = ctx;
     this.distance = distance
 }

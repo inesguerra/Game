@@ -1,7 +1,7 @@
 function Background(ctx, canvas) {
 
   this.stageImage = new Image();
-  this.stageImage.src = '../images/plato_ot.jpg';
+  this.stageImage.src = './images/plato_ot.jpg';
   this.posX = 0;
   this.posY = 0;
   this.ctx = ctx;

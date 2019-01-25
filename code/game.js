@@ -61,19 +61,19 @@ Game.prototype.comprobationObstacle = function(temporalObstacle,z){
 Game.prototype.createObstacle = function() {
   
 
-  var temporalObstacle = new Obstacle (this.ctx, this.canvas, Math.floor(Math.random()*(400 - 50) + 50) ,'../images/champu1.png', "champu")
+  var temporalObstacle = new Obstacle (this.ctx, this.canvas, Math.floor(Math.random()*(400 - 50) + 50) ,'./images/champu1.png', "champu")
   if(!this.comprobationObstacle(temporalObstacle,1)) {
     this.arrObstacles.push(temporalObstacle)
   }
 
 
-  var temporalObstacle2 = new Obstacle(this.ctx, this.canvas, Math.floor(Math.random()*(800 - 400)+ 400), '../images/champu1.png', "champu")
+  var temporalObstacle2 = new Obstacle(this.ctx, this.canvas, Math.floor(Math.random()*(800 - 400)+ 400), './images/champu1.png', "champu")
   if(!this.comprobationObstacle(temporalObstacle2,2)) {
     this.arrObstacles.push(temporalObstacle2)
   }
 
 
-  var temporalObstacle3 = new Obstacle(this.ctx, this.canvas, Math.floor(Math.random()*(1100 - 800) + 800), '../images/champu1.png', "champu")
+  var temporalObstacle3 = new Obstacle(this.ctx, this.canvas, Math.floor(Math.random()*(1100 - 800) + 800), './images/champu1.png', "champu")
   if(!this.comprobationObstacle(temporalObstacle3,3)) {
     this.arrObstacles.push(temporalObstacle3)
   }
@@ -86,26 +86,26 @@ Game.prototype.createObstacle = function() {
 
 Game.prototype.createObstacle2 = function() {
  
-  var temporalObstacle4 = new Obstacle (this.ctx, this.canvas, Math.floor(Math.random()*(400 - 50) + 50) ,'../images/tijeras1.png', "tijera")
+  var temporalObstacle4 = new Obstacle (this.ctx, this.canvas, Math.floor(Math.random()*(400 - 50) + 50) ,'./images/tijeras1.png', "tijera")
   if(!this.comprobationObstacle(temporalObstacle4,1)) {
     this.arrObstacles.push(temporalObstacle4)
   }
 
 
-  var temporalObstacle5 = new Obstacle(this.ctx, this.canvas, Math.floor(Math.random()*(800 - 400)+ 400), '../images/tijeras1.png', "tijera")
+  var temporalObstacle5 = new Obstacle(this.ctx, this.canvas, Math.floor(Math.random()*(800 - 400)+ 400), './images/tijeras1.png', "tijera")
   if(!this.comprobationObstacle(temporalObstacle5,2)) {
     this.arrObstacles.push(temporalObstacle5)
   }
 
 
-  var temporalObstacle6 = new Obstacle(this.ctx, this.canvas, Math.floor(Math.random()*(1100 - 800) + 800), '../images/tijeras1.png', "tijera")
+  var temporalObstacle6 = new Obstacle(this.ctx, this.canvas, Math.floor(Math.random()*(1100 - 800) + 800), './images/tijeras1.png', "tijera")
   if(!this.comprobationObstacle(temporalObstacle6,3)) {
     this.arrObstacles.push(temporalObstacle6)
   }
 };
 
 Game.prototype.createObstacle3 = function() {
-  var temporalObstacle7 = new Obstacle(this.ctx, this.canvas, Math.floor(Math.random()*1100), '../images/mascarilla.png', "mascarilla")
+  var temporalObstacle7 = new Obstacle(this.ctx, this.canvas, Math.floor(Math.random()*1100), './images/mascarilla.png', "mascarilla")
   if(!this.comprobationObstacle(temporalObstacle7,4)) {
     this.arrObstacles.push(temporalObstacle7)
   }
@@ -290,7 +290,7 @@ Game.prototype.start = function() {
   this.initializeBackground();
   this.createObstacle();
   this.repeat();
-  this.shootSound = new MySound("../music/David Bisbal - Ave María (Official Music Video).mp3");  
+  this.shootSound = new MySound("./music/David Bisbal - Ave María (Official Music Video).mp3");  
   this.shootSound.play();
 
 };

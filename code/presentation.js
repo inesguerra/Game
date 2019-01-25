@@ -1,8 +1,8 @@
 function Presentacion(ctx, canvas) {
     this.coverImage = new Image ();
     this.logo = new Image ()
-    this.logo.src = '../images/logo.png'
-    this.coverImage.src = '../images/presentation.jpg';
+    this.logo.src = './images/logo.png'
+    this.coverImage.src = './images/presentation.jpg';
     this.ctx = ctx;
     this.canvas = canvas;
 
